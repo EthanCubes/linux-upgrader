@@ -23,15 +23,15 @@ command -v flatpak >/dev/null 2>&1 && yes | flatpak update # works for most linu
 command -v flatpak >/dev/null 2>&1 && flatpak_installed="true"
 
 # Arch Linux pacman
-if [ $package_manager = "pacman" ] ; then
+if [ "$package_manager" = "pacman" ] ; then
     yay_installed="false"
     paru_installed="false"
-    command -v yay >/dev/null 2>&1 && yes | yay 
-    command -v paru >/dev/null 2>&1 && yes | paru -Syu
-    if [ $yay_installed = "true" ] ; then
+    command -v yay >/dev/null 2>&1 && yay_installed="true"
+    command -v paru >/dev/null 2>&1 && paru_installed="true"
+    if [ "$yay_installed" = "true" ] ; then
         yes | yay
     else
-        if [ $paru_installed = "true"] ; then
+        if [ "$paru_installed" = "true" ] ; then
             yes | paru
         else 
             sudo pacman -Syu --noconfirm
@@ -40,18 +40,18 @@ if [ $package_manager = "pacman" ] ; then
 fi
 
 # Debian apt
-if [ $package_manager = "apt" ] ; then
-    sudo apt update # fetches information
+if [ "$package_manager" = "apt" ] ; then
+    sudo apt update
     sudo apt upgrade -y
 fi
 
 # Fedora dnf
-if [ $package_manager = "dnf" ] ; then
+if [ "$package_manager" = "dnf" ] ; then
     sudo dnf update
     sudo dnf upgrade -y
 fi
 
-if [ $package_manager = "none" ] && [ $flatpak_installed = "false" ] ; then
+if [ "$package_manager" = "none" ] && [ "$flatpak_installed" = "false" ] ; then
     echo "No supported package manager detected!" 1>&2
     exit 1
 fi
