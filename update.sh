@@ -4,18 +4,23 @@
 debug_mode="false"
 ls ~/debug_mode >/dev/null 2>&1 && debug_mode="true"
 
-package_manager="none"
-
 # test for package manager
+package_manager="none"
 command -v pacman >/dev/null 2>&1 && package_manager="pacman"
 command -v apt >/dev/null 2>&1 && package_manager="apt"
 command -v dnf >/dev/null 2>&1 && package_manager="dnf"
 
+# check for internet connection
+command -v ping https://archlinux.org/ >/dev/null 2>&1 || /
+if [ $debug_mode = "false" ] ; then
+    echo "No internet connection" 1>&2
+    exit 101
+fi
+
+# Universal flatpak
 flatpak_installed="false"
 command -v flatpak >/dev/null 2>&1 && yes | flatpak update # works for most linux systems
 command -v flatpak >/dev/null 2>&1 && flatpak_installed="true"
-
-package_manager="none"
 
 # Arch Linux pacman
 if [ $package_manager = "pacman" ] ; then
