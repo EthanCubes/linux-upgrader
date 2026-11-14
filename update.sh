@@ -10,13 +10,6 @@ command -v pacman >/dev/null 2>&1 && package_manager="pacman"
 command -v apt >/dev/null 2>&1 && package_manager="apt"
 command -v dnf >/dev/null 2>&1 && package_manager="dnf"
 
-# check for internet connection
-command -v ping https://archlinux.org/ >/dev/null 2>&1 || /
-if [ $debug_mode = "false" ] ; then
-    echo "No internet connection" 1>&2
-    exit 101
-fi
-
 # Universal flatpak
 flatpak_installed="false"
 command -v flatpak >/dev/null 2>&1 && yes | flatpak update # works for most linux systems
@@ -51,6 +44,7 @@ if [ "$package_manager" = "dnf" ] ; then
     sudo dnf upgrade -y
 fi
 
+# No package manager
 if [ "$package_manager" = "none" ] && [ "$flatpak_installed" = "false" ] ; then
     echo "No supported package manager detected!" 1>&2
     exit 1
