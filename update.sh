@@ -1,9 +1,5 @@
 #! /bin/bash
 
-# Debug mode (for developers)
-debug_mode="false"
-ls ~/debug_mode >/dev/null 2>&1 && debug_mode="true"
-
 # test for package manager
 package_manager="none"
 command -v pacman >/dev/null 2>&1 && package_manager="pacman"
