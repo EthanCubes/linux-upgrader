@@ -8,7 +8,7 @@ command -v dnf >/dev/null 2>&1 && package_manager="dnf"
 
 # Universal flatpak
 flatpak_installed="false"
-command -v flatpak >/dev/null 2>&1 && yes | flatpak update # works for most linux systems
+command -v flatpak >/dev/null 2>&1 && flatpak update -y
 command -v flatpak >/dev/null 2>&1 && flatpak_installed="true"
 
 # Arch Linux pacman
@@ -18,10 +18,10 @@ if [ "$package_manager" = "pacman" ] ; then
     command -v yay >/dev/null 2>&1 && yay_installed="true"
     command -v paru >/dev/null 2>&1 && paru_installed="true"
     if [ "$yay_installed" = "true" ] ; then
-        yes | yay
+        yay -Syu --noconfirm
     else
         if [ "$paru_installed" = "true" ] ; then
-            yes | paru
+            paru -Syu --noconfirm
         else 
             sudo pacman -Syu --noconfirm
         fi
