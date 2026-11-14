@@ -24,9 +24,19 @@ command -v flatpak >/dev/null 2>&1 && flatpak_installed="true"
 
 # Arch Linux pacman
 if [ $package_manager = "pacman" ] ; then
-    command -v yay >/dev/null 2>&1 && yes | yay # if yay is installed, run yes | yay to update system
-    command -v paru >/dev/null 2>&1 && yes | paru -Syu # same thing but with paru instead
-    command -v yay >/dev/null 2>&1 || command -v paru >/dev/null 2>&1 || sudo pacman -Syu --noconfirm # fallback to pacman if yay and paru are both not installed
+    yay_installed="false"
+    paru_installed="false"
+    command -v yay >/dev/null 2>&1 && yes | yay 
+    command -v paru >/dev/null 2>&1 && yes | paru -Syu
+    if [ $yay_installed = "true" ] ; then
+        yes | yay
+    else
+        if [ $paru_installed = "true"] ; then
+            yes | paru
+        else 
+            sudo pacman -Syu --noconfirm
+        fi
+    fi
 fi
 
 # Debian apt
