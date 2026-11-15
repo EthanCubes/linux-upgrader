@@ -9,13 +9,6 @@ command -v apt >/dev/null 2>&1 && package_manager="apt"
 command -v yum >/dev/null 2>&1 && package_manager="yum"
 command -v dnf >/dev/null 2>&1 && package_manager="dnf"
 
-# Universal flatpak
-flatpak_installed="false"
-command -v flatpak >/dev/null 2>&1 && flatpak_installed="true"
-if [ "$flatpak_installed" = "true" ] ; then
-    flatpak update -y
-fi
-
 # Arch pacman
 if [ "$package_manager" = "pacman" ] ; then
     yay_installed="false"
@@ -47,6 +40,13 @@ fi
 # Fedora dnf
 if [ "$package_manager" = "dnf" ] ; then
     sudo dnf upgrade -y
+fi
+
+# Universal flatpak
+flatpak_installed="false"
+command -v flatpak >/dev/null 2>&1 && flatpak_installed="true"
+if [ "$flatpak_installed" = "true" ] ; then
+    flatpak update -y
 fi
 
 # No package manager
