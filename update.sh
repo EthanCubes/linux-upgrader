@@ -23,7 +23,7 @@ if [ "$package_manager" = "pacman" ] ; then
     command -v yay >/dev/null 2>&1 && yay_installed="true"
     command -v paru >/dev/null 2>&1 && paru_installed="true"
     if [ "$yay_installed" = "true" ] ; then
-        yay -Syu --noconfirm --answerclean None --answerdiff None --answeredit None
+        yay -Syu --noconfirm
     else
         if [ "$paru_installed" = "true" ] ; then
             paru -Syu --noconfirm
