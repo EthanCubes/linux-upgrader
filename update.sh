@@ -8,8 +8,10 @@ command -v dnf >/dev/null 2>&1 && package_manager="dnf"
 
 # Universal flatpak
 flatpak_installed="false"
-command -v flatpak >/dev/null 2>&1 && flatpak update -y
 command -v flatpak >/dev/null 2>&1 && flatpak_installed="true"
+if [ "$flatpak_installed" = "true" ] ; then
+    flatpak update -y
+fi
 
 # Arch Linux pacman
 if [ "$package_manager" = "pacman" ] ; then
